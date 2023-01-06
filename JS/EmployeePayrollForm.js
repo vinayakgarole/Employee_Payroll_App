@@ -44,11 +44,11 @@ function save() {
  * Method for storing employee payroll data to local storage 
  * @param {*} employeePayrollData : employee payroll data
  */
-function createAndUpdateStorage(employeePayrollData){
+function createAndUpdateStorage(employeePayrollData) {
     let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
-    if (employeePayrollList != undefined){
+    if (employeePayrollList != undefined) {
         employeePayrollList.push(EmployeePayrollData);
-    }else{
+    } else {
         employeePayrollList = [EmployeePayrollData]
     }
 
@@ -67,7 +67,7 @@ const createEmployeePayroll = () => {
     } catch (e) {
         setTextalue('.text-error', e);
         throw e;
-    } 
+    }
     employeePayrollData.profilePic = getSelectedValues('[name=profile]').pop();
     employeePayrollData.gender = getSelectedValues('[name=gender]').pop();
     employeePayrollData.department = getSelectedValues('[name=department]');
@@ -113,4 +113,51 @@ const getInputValueById = (id) => {
 const getInputValueByValue = (id) => {
     let value = document.getElementById(id).value;
     return value;
+}
+
+
+/**
+ * Method for reseting the form values
+ */
+const resetForm = () => {
+    setValues('#name', '');
+    unsetSelectedValues('[name=profile]');
+    unsetSelectedValues('[name=gender]');
+    unsetSelectedValues('[name=department]');
+    setValues('#salary', '');
+    setValues('#notes', '');
+    setValues('#day', '1');
+    setValues('#month', 'January');
+    setValues('#year', '2020');
+}
+
+/**
+ * Helper method for reset form
+ * @param {*} propertyValue 
+ */
+const unsetSelectedValues = (propertyValue) => {
+    let allItems = document.querySelectorAll(propertyValue);
+    allItems.forEach(item => {
+        item.checked = false;
+    });
+}
+
+/**
+ * Helper method for reset form
+ * @param {*} id 
+ * @param {*} value 
+ */
+const setValues = (id, value) => {
+    const element = document.querySelector(id);
+    element.value = value;
+}
+
+/**
+ * Helper method for reset form
+ * @param {*} id 
+ * @param {*} value 
+ */
+const setTextValues = (id, value) => {
+    const element = document.querySelector(id);
+    element.textContent = value;
 }
