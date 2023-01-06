@@ -1,3 +1,6 @@
+/**
+ * validation for name in frontend
+ */
 window.addEventListener('DOMContentLoaded', (event) => {
     const name = document.querySelector('#name');
     const textError = document.querySelector('.text-error');
@@ -24,16 +27,39 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 })
 
-
+/**
+ * Main method that invoked by submit button
+ * @returns 
+ */
 function save() {
     try {
         let employeePayrollData = createEmployeePayroll();
-        alert(employeePayrollData.toString());
+        createAndUpdateStorage(employeePayrollData);
     } catch (e) {
         return;
     }
 }
 
+/**
+ * Method for storing employee payroll data to local storage 
+ * @param {*} employeePayrollData : employee payroll data
+ */
+function createAndUpdateStorage(employeePayrollData){
+    let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
+    if (employeePayrollList != undefined){
+        employeePayrollList.push(EmployeePayrollData);
+    }else{
+        employeePayrollList = [EmployeePayrollData]
+    }
+
+    alert(employeePayrollList.toString());
+    localStorage.setItem("EmployeePayrollList", JSON.stringify(employeePayrollList))
+}
+
+/**
+ * 
+ * @returns Method for creating employee payroll data object.
+ */
 const createEmployeePayroll = () => {
     let employeePayrollData = new EmployeePayrollData();
     try {
